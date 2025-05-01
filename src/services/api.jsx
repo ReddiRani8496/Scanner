@@ -1,7 +1,7 @@
 // src/services/api.ts
 import axios from "axios";
 
-const API_URL = "http://localhost:8080/api";
+const API_URL = "https://outstanding-cooperation-production.up.railway.app/api";
 
 export const productApi = {
   getByCode: (code) => axios.get(`${API_URL}/products/${code}`),
