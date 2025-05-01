@@ -423,6 +423,7 @@ export default function BarcodeScanner() {
   const fetchProducts = async () => {
     try {
       const response = await productApi.getAllProducts();
+      console.log("response ", response);
       setProducts(response.data);
     } catch (error) {
       console.error("Error fetching products:", error);

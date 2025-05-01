@@ -6,6 +6,7 @@ const API_URL = "https://outstanding-cooperation-production.up.railway.app/api";
 export const productApi = {
   getByCode: (code) => axios.get(`${API_URL}/products/${code}`),
   addProduct: (product) => axios.post(`${API_URL}/products`, product),
+  getAllProducts: () => axios.get(`${API_URL}/products`),
 };
 
 export const cartApi = {
