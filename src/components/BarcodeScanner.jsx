@@ -500,8 +500,12 @@ export default function BarcodeScanner() {
           const code = result.getText();
           try {
             const response = await productApi.getByCode(code);
+            console.log("inside try block response");
+            alert("resp ", response);
             if (response.data) {
               const cartResponse = await cartApi.addToCart("user123", code);
+              console.log("cart response ", cartResponse);
+              alert("cart response", cartResponse);
               setCart(cartResponse.data);
               toast.success("Product added to cart!");
             }
