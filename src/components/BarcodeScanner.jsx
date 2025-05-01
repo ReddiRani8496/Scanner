@@ -438,12 +438,13 @@ export default function BarcodeScanner() {
 
     setTimeout(() => {
       const video = webcamRef.current && webcamRef.current.video;
-      if (!video) {
+      console.log("video ", video);
+
+      if (!video || video.readyState !== 4) {
         toast.error("Camera not ready");
         setScanning(false);
         return;
       }
-
       // Clean up any previous reader
       if (codeReaderRef.current) {
         codeReaderRef.current.reset();
@@ -482,7 +483,7 @@ export default function BarcodeScanner() {
           }
         }
       });
-    }, 500); // Wait for video to be ready
+    }, 1500); // Wait for video to be ready
   };
 
   // Stop scanning
