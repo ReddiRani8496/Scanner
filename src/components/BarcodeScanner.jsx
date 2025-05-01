@@ -433,6 +433,7 @@ export default function BarcodeScanner() {
   // Start scanning
   const handleStartScanning = () => {
     setScanning(true);
+    console.log("insde handle start scanning");
 
     setTimeout(() => {
       const video = webcamRef.current && webcamRef.current.video;
@@ -449,9 +450,11 @@ export default function BarcodeScanner() {
 
       const codeReader = new BrowserMultiFormatReader();
       codeReaderRef.current = codeReader;
-
+      console.log("line 452");
       codeReader.decodeFromVideoElement(video, async (result, err) => {
+        console.log("outside if result ", result);
         if (result) {
+          console.log("result inside if ", result);
           const code = result.getText();
           try {
             const response = await productApi.getByCode(code);
