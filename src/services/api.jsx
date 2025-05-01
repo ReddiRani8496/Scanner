@@ -12,6 +12,10 @@ export const productApi = {
 export const cartApi = {
   addToCart: (userId, code) =>
     axios.post(`${API_URL}/cart/${userId}/add/${code}`),
+  // updateQuantity: (userId, code, quantity) =>
+  //   axios.put(`${API_URL}/cart/${userId}/update`, { code, quantity }),
   updateQuantity: (userId, code, quantity) =>
-    axios.put(`${API_URL}/cart/${userId}/update`, { code, quantity }),
+    axios.put(
+      `${API_URL}/cart/${userId}/update?code=${code}&quantity=${quantity}`
+    ),
 };
