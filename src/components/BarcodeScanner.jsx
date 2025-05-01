@@ -724,15 +724,11 @@ export default function BarcodeScanner() {
             </button>
           </div>
 
-          <div className="relative w-full max-w-md aspect-video rounded-lg overflow-hidden bg-black">
+          <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-black">
             <Webcam
               ref={webcamRef}
-              className="w-full h-full object-cover"
-              videoConstraints={{
-                facingMode,
-                width: { min: 640, ideal: 1280, max: 1920 },
-                height: { min: 480, ideal: 720, max: 1080 },
-              }}
+              style={{ width: "100%", height: "auto" }}
+              videoConstraints={{ facingMode }}
               mirrored={facingMode === "user"}
             />
             {scanning && (
