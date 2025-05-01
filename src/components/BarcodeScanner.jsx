@@ -432,31 +432,71 @@ export default function BarcodeScanner() {
   };
 
   // Start scanning
+  // const handleStartScanning = () => {
+  //   setScanning(true);
+  //   console.log("insde handle start scanning");
+
+  //   setTimeout(() => {
+  //     const video = webcamRef.current && webcamRef.current.video;
+  //     console.log("video ", video);
+
+  //     if (!video || video.readyState !== 4) {
+  //       toast.error("Camera not ready");
+  //       setScanning(false);
+  //       return;
+  //     }
+  //     // Clean up any previous reader
+  //     if (codeReaderRef.current) {
+  //       codeReaderRef.current.reset();
+  //     }
+
+  //     const codeReader = new BrowserMultiFormatReader();
+  //     codeReaderRef.current = codeReader;
+  //     console.log("line 452");
+  //     codeReader.decodeFromVideoDevice(video, async (result, err) => {
+  //       console.log("outside if result ", result);
+  //       if (result) {
+  //         console.log("result inside if ", result);
+  //         const code = result.getText();
+  //         try {
+  //           const response = await productApi.getByCode(code);
+  //           if (response.data) {
+  //             const cartResponse = await cartApi.addToCart("user123", code);
+  //             setCart(cartResponse.data);
+  //             toast.success("Product added to cart!");
+  //             setScanning(false);
+  //             codeReader.reset();
+  //             codeReaderRef.current = null;
+  //           }
+  //         } catch (error) {
+  //           console.error("Error adding to cart:", error);
+  //           setNewProduct({
+  //             code,
+  //             name: "",
+  //             description: "",
+  //             mrp: 0,
+  //             discount: 0,
+  //           });
+  //           setScanning(false);
+  //           codeReader.reset();
+  //           codeReaderRef.current = null;
+  //         }
+  //       }
+  //     });
+  //   }, 1500); // Wait for video to be ready
+  // };
+
   const handleStartScanning = () => {
     setScanning(true);
-    console.log("insde handle start scanning");
-
-    setTimeout(() => {
-      const video = webcamRef.current && webcamRef.current.video;
-      console.log("video ", video);
-
-      if (!video || video.readyState !== 4) {
-        toast.error("Camera not ready");
-        setScanning(false);
-        return;
-      }
-      // Clean up any previous reader
-      if (codeReaderRef.current) {
-        codeReaderRef.current.reset();
-      }
-
-      const codeReader = new BrowserMultiFormatReader();
-      codeReaderRef.current = codeReader;
-      console.log("line 452");
-      codeReader.decodeFromVideoElement(video, async (result, err) => {
-        console.log("outside if result ", result);
+    console.log("inside handle start scanning");
+    const codeReader = new BrowserMultiFormatReader();
+    codeReader.decodeFromVideoDevice(
+      null,
+      webcamRef?.current?.video,
+      async (result, err) => {
+        console.log("inside decode", result, "err ", err);
         if (result) {
-          console.log("result inside if ", result);
+          console.log("inside result if");
           const code = result.getText();
           try {
             const response = await productApi.getByCode(code);
@@ -464,9 +504,6 @@ export default function BarcodeScanner() {
               const cartResponse = await cartApi.addToCart("user123", code);
               setCart(cartResponse.data);
               toast.success("Product added to cart!");
-              setScanning(false);
-              codeReader.reset();
-              codeReaderRef.current = null;
             }
           } catch (error) {
             console.error("Error adding to cart:", error);
@@ -478,14 +515,11 @@ export default function BarcodeScanner() {
               discount: 0,
             });
             setScanning(false);
-            codeReader.reset();
-            codeReaderRef.current = null;
           }
         }
-      });
-    }, 1500); // Wait for video to be ready
+      }
+    );
   };
-
   // Stop scanning
   const handleStopScanning = () => {
     setScanning(false);
